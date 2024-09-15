@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Réussie</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .info-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem; /* Coins arrondis */
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,.1);
+            margin-top: 20px;
+            position: relative;
+            height: 600px; /* Hauteur agrandie du conteneur */
+            overflow: hidden;
+        }
+        .info-box h1 {
+            color: #28a745;
+            margin-bottom: 20px; /* Espacement pour le titre */
+        }
+        .scrolling-container {
+            position: relative;
+            height: calc(100% - 60px); /* Hauteur ajustée moins espace pour le bouton */
+            overflow: hidden;
+        }
+        .scrolling-text {
+            position: absolute;
+            top: calc(100% - 2cm); /* Position initiale du texte décalée de 2 cm vers le haut */
+            left: 0;
+            width: 100%;
+            animation: scroll 30s linear forwards; /* Durée augmentée pour un défilement plus lent */
+        }
+        .scrolling-text p {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            padding: 10px 20px; /* Espacement ajusté */
+        }
+        @keyframes scroll {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); } /* Ajusté pour faire défiler le texte entièrement */
+        }
+        .navbar-nav .nav-item .btn-secondary {
+            border: none; /* Pas de bordure pour le bouton */
+            background: transparent; /* Fond transparent */
+            color: #007bff; /* Couleur du texte */
+            font-size: 1rem; /* Taille de police ajustée */
+            padding: 0.5rem 1rem; /* Espacement ajusté */
+        }
+        .navbar-nav .nav-item .btn-secondary:hover {
+            color: #0056b3; /* Couleur du texte au survol */
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .btn-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Accueil</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <button class="btn btn-secondary" disabled>Votre Test Santé</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="info-box">
+            <h1>Connexion Réussie</h1>
+            <div class="scrolling-container">
+                <div class="scrolling-text">
+                    <p>Vous êtes désormais connecté avec succès à votre compte sur notre portail dédié à la santé. Nous sommes ravis de vous accueillir dans notre communauté.</p>
+                    <p>Notre plateforme est conçue pour vous fournir des informations de qualité sur les soins de santé, les traitements disponibles, et les conseils de prévention. Vous pouvez accéder à vos dossiers médicaux, consulter des articles informatifs, et prendre rendez-vous avec des professionnels de santé.</p>
+                    <p>N'hésitez pas à explorer toutes les fonctionnalités offertes pour mieux gérer votre santé et votre bien-être. Pour toute question ou assistance, notre équipe est à votre disposition pour vous aider.</p>
+                </div>
+            </div>
+            <div class="btn-container">
+                <a href="{% url 'test' %}" class="btn btn-primary">Retour à l'Accueil</a>
+                <a href="{% url 'test' %}" class="btn btn-primary">Votre Test Santé</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Fonction pour démarrer le défilement du texte immédiatement après la connexion
+        window.addEventListener('load', function() {
+            const scrollingText = document.querySelector('.scrolling-text');
+            if (scrollingText) {
+                scrollingText.style.animationPlayState = 'running'; // Démarre l'animation
+            }
+        });
+    </script>
+</body>
+</html>
