@@ -73,7 +73,7 @@ model = tf.keras.models.load_model(
     '/home/yves/iadev-python/c8/best_model.keras',
     custom_objects={'custom_accuracy': custom_accuracy}
 )
-preprocessor = joblib.load('/home/yves/iadev-python/c8/preprocessor.joblib')
+preprocessor = joblib.load('/home/yves/iadev-python/c13/preprocessor.joblib')
 
 
 from django.http import JsonResponse
