@@ -5,3 +5,4 @@ djongo
 pandas
 tensorflow
 joblib
+sklearn
