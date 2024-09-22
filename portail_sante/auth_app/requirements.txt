@@ -4,3 +4,4 @@ pymongo
 djongo
 pandas
 tensorflow
+joblib
