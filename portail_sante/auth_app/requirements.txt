@@ -3,3 +3,4 @@ djangorestframework
 pymongo
 djongo
 pandas
+tensorflow
