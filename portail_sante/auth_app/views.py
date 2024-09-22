@@ -4,11 +4,9 @@ from pymongo.errors import ServerSelectionTimeoutError, PyMongoError
 import pandas as pd
 import tensorflow as tf
 import joblib
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.impute import SimpleImputer
-from django.shortcuts import render
+import os
+import requests
+from django.http import JsonResponse
 
 # Configurer les paramètres de connexion MongoDB
 MONGO_URI = 'mongodb://root:pass12345@localhost:27017/'
@@ -62,21 +60,20 @@ def connexion_reussie(request):
 def custom_accuracy(y_true, y_pred):
     return tf.keras.metrics.binary_accuracy(y_true, y_pred)
 
-# Fonction pour convertir les pourcentages en décimaux
-def convertir_pourcentage_en_decimal(chaine):
-    if isinstance(chaine, str) and '%' in chaine:
-        return float(chaine.replace('%', '')) / 100.0
-    return float(chaine)
+# Fonction pour charger le modèle et le préprocesseur
+def load_model_and_preprocessor():
+    try:
+        model_path = os.path.join(os.path.dirname(__file__), 'best_model.keras')
+        preprocessor_path = os.path.join(os.path.dirname(__file__), 'preprocessor.joblib')
+        model = tf.keras.models.load_model(model_path, custom_objects={'custom_accuracy': custom_accuracy})
+        preprocessor = joblib.load(preprocessor_path)
+        return model, preprocessor
+    except Exception as e:
+        print(f"Erreur lors du chargement du modèle ou du préprocesseur : {e}")
+        return None, None
 
-# Charger le modèle en incluant la fonction personnalisée
-model = tf.keras.models.load_model(
-    '/home/yves/iadev-python/c13/best_model.keras',
-    custom_objects={'custom_accuracy': custom_accuracy}
-)
-preprocessor = joblib.load('/home/yves/iadev-python/c13/preprocessor.joblib')
-
-
-from django.http import JsonResponse
+# Charger le modèle et le préprocesseur
+model, preprocessor = load_model_and_preprocessor()
 
 def service_monitoring(request):
     monitoring_status = {
@@ -93,11 +90,7 @@ def service_monitoring(request):
         print(f"Erreur lors de la vérification de MongoDB : {e}")
 
     # Vérification du chargement du modèle
-    try:
-        if model is not None:
-            monitoring_status['model_load'] = True
-    except Exception as e:
-        print(f"Erreur lors de la vérification du modèle : {e}")
+    monitoring_status['model_load'] = model is not None
 
     # Retourner l'état du monitoring sous forme de réponse JSON
     if monitoring_status['mongodb_connection'] and monitoring_status['model_load']:
@@ -105,17 +98,11 @@ def service_monitoring(request):
     else:
         return JsonResponse({'status': 'non-operational', 'details': monitoring_status}, status=500)
 
-
 def equipe_view(request):
     return render(request, 'equipe.html')
 
-
 def directeur(request):
     return render(request, 'directeur.html')
-
-
-import requests
-from django.shortcuts import render, redirect
 
 # Votre URL d'API FastAPI
 FASTAPI_URL = 'http://localhost:8002'
