@@ -1,0 +1,111 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - e1
+  pull_request:
+    branches:
+      - e1
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          python manage.py test
+          python -m unittest discover -s tests/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ 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
+41c3ElIHtNAi5mqzZULlgQ01s= }}
+
+      - name: Deploy to server
+        run: |
+          scp model.h5 user@remote_server:/home/yves/iadev-python/c13/best_model.keras
+          ssh user@remote_server "docker-compose up -d --build"

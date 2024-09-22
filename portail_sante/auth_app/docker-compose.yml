@@ -1,0 +1,36 @@
+version: '3'
+services:
+  django_app:
+    build:
+      context: ./auth_app  # Chemin vers le contexte de construction
+      dockerfile: Dockerfile  # Nom du fichier Dockerfile dans ce contexte
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./auth_app:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=myproject.settings
+
+services:
+  django_app:
+    build: .
+    volumes:
+      - .:/app
+      - /home/yves/iadev-python/c13/best_model.keras:/app/best_model.keras
+      - /home/yves/iadev-python/c13/Mon_projet_fina/portail_sante/docker-compose.yml
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=myproject.settings
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
