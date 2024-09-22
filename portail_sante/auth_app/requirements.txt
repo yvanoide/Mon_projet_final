@@ -6,3 +6,4 @@ pandas
 tensorflow
 joblib
 scikit-learn
+pytest 
