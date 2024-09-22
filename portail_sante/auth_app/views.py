@@ -70,7 +70,7 @@ def convertir_pourcentage_en_decimal(chaine):
 
 # Charger le modèle en incluant la fonction personnalisée
 model = tf.keras.models.load_model(
-    '/home/yves/iadev-python/c8/best_model.keras',
+    '/home/yves/iadev-python/c13/best_model.keras',
     custom_objects={'custom_accuracy': custom_accuracy}
 )
 preprocessor = joblib.load('/home/yves/iadev-python/c13/preprocessor.joblib')
