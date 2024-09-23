@@ -45,7 +45,6 @@ jobs:
           export PYTHONPATH=$PYTHONPATH:$(pwd)/portail_sante/auth_app
           python portail_sante/manage.py test
 
-
   deploy:
     runs-on: ubuntu-latest
     needs: test
@@ -59,14 +58,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-
       - name: Deploy to server
         run: |
           scp -o StrictHostKeyChecking=no portail_sante/model.h5 user@${{ secrets.SERVER_IP }}:/home/yves/iadev-python/c13/best_model.keras
           ssh -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} "docker-compose up -d --build"
 
-
-
-      
       
 
