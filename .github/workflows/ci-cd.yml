@@ -66,6 +66,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} "docker-compose up -d --build"
 
 
+
       
       
 
