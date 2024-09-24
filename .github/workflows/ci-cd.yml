@@ -58,16 +58,4 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to server
-        run: |
-          # Définissez le chemin vers le modèle sur le serveur
-          MODEL_PATH="/home/yves/iadev-python/c13/best_model.keras"
-          
-          # Remplacez 'user' par votre nom d'utilisateur
-          HOST="user@172.17.205.155"  # Utilisez l'adresse IP correcte
-          
-          # Copiez le modèle vers le serveur
-          scp -P 22 -o StrictHostKeyChecking=no portail_sante/model.h5 $HOST:$MODEL_PATH || exit 1
-          
-          # Exécutez docker-compose sur le serveur
-          ssh -p 22 -o StrictHostKeyChecking=no $HOST "docker-compose up -d --build" || exit 1
+      
