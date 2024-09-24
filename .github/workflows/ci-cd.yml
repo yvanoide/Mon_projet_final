@@ -8,7 +8,7 @@ on:
     branches:
       - e1
   schedule:
-    - cron: '0 0 * * *'  # Exécution quotidienne à minuit
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -63,8 +63,11 @@ jobs:
           # Définissez le chemin vers le modèle sur le serveur
           MODEL_PATH="/home/yves/iadev-python/c13/best_model.keras"
           
+          # Remplacez 'user' par votre nom d'utilisateur
+          HOST="user@172.17.205.155"  # Utilisez l'adresse IP correcte
+          
           # Copiez le modèle vers le serveur
-          scp -P 22 -o StrictHostKeyChecking=no portail_sante/model.h5 user@your_host:$MODEL_PATH || exit 1
+          scp -P 22 -o StrictHostKeyChecking=no portail_sante/model.h5 $HOST:$MODEL_PATH || exit 1
           
           # Exécutez docker-compose sur le serveur
-          ssh -p 22 -o StrictHostKeyChecking=no user@your_host "docker-compose up -d --build" || exit 1
+          ssh -p 22 -o StrictHostKeyChecking=no $HOST "docker-compose up -d --build" || exit 1
