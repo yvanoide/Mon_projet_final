@@ -60,7 +60,8 @@ jobs:
 
       - name: Deploy to server
         run: |
-          scp -P 22 -o StrictHostKeyChecking=no portail_sante/model.h5 user@${{ secrets.SERVER_IP }}:/home/yves/iadev-python/c13/best_model.keras
-          ssh -p 22 -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} "docker-compose up -d --build"
+          scp -P 22 -o StrictHostKeyChecking=no portail_sante/model.h5 user@your_host:/home/yves/iadev-python/c13/best_model.keras
+          ssh -p 22 -o StrictHostKeyChecking=no user@your_host "docker-compose up -d --build"
+
 
 
