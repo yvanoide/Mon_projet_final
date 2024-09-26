@@ -1,4 +1,4 @@
-Django>=3.0,<4.0
+Django>=3.2,<4.0
 djangorestframework
 pymongo
 djongo
@@ -6,7 +6,7 @@ pandas
 tensorflow
 joblib
 scikit-learn
-pytest 
-Django>=3.2,<4.0
+pytest
 mlflow
 protobuf<3.21.0
+numpy<1.20  # Rétrograder numpy à une version compatible
