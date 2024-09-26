@@ -9,3 +9,4 @@ scikit-learn
 pytest 
 Django>=3.2,<4.0
 mlflow
+protobuf<3.21.0
