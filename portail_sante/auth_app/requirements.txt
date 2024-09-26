@@ -9,4 +9,4 @@ scikit-learn
 pytest
 mlflow
 protobuf<3.21.0
-numpy<1.20  # Rétrograder numpy à une version compatible
+numpy==1.19.5  # Spécifiez une version de numpy
