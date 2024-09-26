@@ -168,3 +168,26 @@ def test(request):
         'score': result['score'] if result else None, 
         'response': result['response'] if result else None
     })
+
+import mlflow
+import mlflow.keras
+
+# Fonction d'entraînement avec MLflow
+def train_model_with_mlflow(data, labels):
+    with mlflow.start_run():
+        # Suivi des paramètres d'entraînement
+        mlflow.log_param('batch_size', 32)
+        mlflow.log_param('epochs', 10)
+        
+        # Charger le modèle et l'entraîner
+        model = create_model()  # Fonction qui crée votre modèle
+        history = model.fit(data, labels, epochs=10, batch_size=32)
+        
+        # Enregistrer les métriques de performance
+        mlflow.log_metric('accuracy', history.history['accuracy'][-1])
+        mlflow.log_metric('loss', history.history['loss'][-1])
+        
+        # Enregistrer le modèle avec MLflow
+        mlflow.keras.log_model(model, 'model')
+
+        return model

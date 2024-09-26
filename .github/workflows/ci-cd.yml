@@ -58,4 +58,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      
+- name: Run training with MLflow
+        run: |
+          export MLFLOW_TRACKING_URI=http://localhost:5000
+          python portail_sante/train_model.py  # Assurez-vous que ce fichier inclut l'entraînement MLflow
