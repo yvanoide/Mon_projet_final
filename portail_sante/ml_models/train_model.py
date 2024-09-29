@@ -15,17 +15,15 @@ try:
 except Exception as e:
     print(f"Erreur de connexion à MLflow: {e}")
 
-# Chemin vers le fichier CSV (ajuste le chemin ici)
-file_path = '/home/yves/iadev-python/c13/Combine_Dataset_avec_score.csv'  # Assure-toi que ce chemin est correct
+# Chemin vers le fichier CSV (utilisation d'une URL)
+url = 'https://example.com/Combine_Dataset_avec_score.csv'  # Remplace par l'URL réelle de ton dataset
 
-# Charger les données depuis le fichier CSV
+# Charger les données depuis l'URL
 try:
-    data = pd.read_csv(file_path)
-except FileNotFoundError as e:
-    print(f"Erreur lors du chargement du fichier CSV : {e}")
+    data = pd.read_csv(url)
+except Exception as e:
+    print(f"Erreur lors du chargement des données : {e}")
     exit(1)
-
-# Continue avec le reste de ton code...
 
 # 4. Convertir les pourcentages en décimaux
 def convertir_pourcentage_en_decimal(pourcentage):
@@ -86,3 +84,8 @@ history = model.fit(
     verbose=1,
     callbacks=[tensorboard_callback]
 )
+
+# Optionnel: Enregistrement du modèle avec MLflow
+mlflow.tensorflow.log_model(model, "model")
+
+# Note: Assurez-vous que votre dépôt GitHub puisse accéder à l'URL des données
