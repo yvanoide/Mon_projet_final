@@ -9,5 +9,4 @@ scikit-learn
 pytest
 mlflow
 protobuf<3.21.0
-numpy==1.19.5  
 numpy==1.21.0
