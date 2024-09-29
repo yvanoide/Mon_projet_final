@@ -9,5 +9,5 @@ scikit-learn
 pytest
 mlflow
 protobuf<3.21.0
-numpy==1.19.5  # Spécifiez une version de numpy
+pip install numpy==1.21.0
 
