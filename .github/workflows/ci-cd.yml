@@ -73,3 +73,5 @@ jobs:
         run: |
           export MLFLOW_TRACKING_URI=http://localhost:5000
           python portail_sante/ml_models/train_model.py
+env:
+  DATA_FILE_PATH: /home/yves/iadev-python/c13/csv/Combine_Dataset_avec_score\ copy\ 2.csv
