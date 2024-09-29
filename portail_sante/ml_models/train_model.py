@@ -16,7 +16,7 @@ except Exception as e:
     print(f"Erreur de connexion à MLflow: {e}")
 
 # Chemin vers le fichier CSV (ajuste le chemin ici)
-file_path = '/home/yves/iadev-python/c13/Combine_Dataset_avec_score.csv'  # Assure-toi que ce chemin est correct
+file_path = '/home/yves/iadev-python/c13/Mon_projet_fina/Combine_Dataset_avec_score.csv'  # Assure-toi que ce chemin est correct
 
 # Charger les données depuis le fichier CSV
 try:
