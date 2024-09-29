@@ -61,5 +61,5 @@ jobs:
 
       - name: Run training with MLflow
         run: |
-          export MLFLOW_TRACKING_URI=http://localhost:5000  # Configurer l'URI de tracking MLflow
+          export MLFLOW_TRACKING_URI=http://127.0.0.1:5000/  # Configurer l'URI de tracking MLflow
           python portail_sante/ml_models/train_model.py  # Assurez-vous que ce fichier inclut l'entraînement MLflow
