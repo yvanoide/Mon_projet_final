@@ -5,6 +5,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+import os
+
+data_file_path = os.getenv('DATA_FILE_PATH')
+data = pd.read_csv(data_file_path)
 
 # Configuration des logs
 logging.basicConfig(level=logging.INFO)
