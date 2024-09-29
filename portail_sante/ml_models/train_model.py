@@ -1,14 +1,11 @@
-import logging
-import mlflow
+import loggingimport mlflow
 import mlflow.sklearn
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import os
-
-data_file_path = os.getenv('DATA_FILE_PATH')
-data = pd.read_csv(data_file_path)
+import logging
 
 # Configuration des logs
 logging.basicConfig(level=logging.INFO)
@@ -26,7 +23,6 @@ def load_data(filepath):
 
 def preprocess_data(data):
     logger.info("Prétraitement des données...")
-    # Exemple de traitement simple, à adapter selon ton cas
     try:
         # Remplacer les valeurs manquantes par la médiane
         data.fillna(data.median(), inplace=True)
@@ -66,7 +62,11 @@ def main():
     with mlflow.start_run():
         try:
             # Chemin du fichier de données
-            filepath = "/home/yves/iadev-python/c13/csv/Combine_Dataset_avec_score copy 2.csv"
+            filepath = os.getenv('DATA_FILE_PATH')
+            if filepath is None or not os.path.isfile(filepath):
+                logger.error("Le chemin du fichier de données est invalide ou le fichier n'existe pas.")
+                raise FileNotFoundError(f"Fichier non trouvé à l'emplacement : {filepath}")
+                
             data = load_data(filepath)
 
             # Séparation des features (X) et de la cible (y)
