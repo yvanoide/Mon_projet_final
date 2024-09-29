@@ -62,7 +62,7 @@ def main():
     with mlflow.start_run():
         try:
             # Chemin du fichier de données
-            filepath = "/home/yves/iadev-python/c13/Mon_projet_fina/Combine_Dataset_avec_score.csv"
+            filepath = "/home/yves/iadev-python/c13/csv"
             data = load_data(filepath)
 
             # Séparation des features (X) et de la cible (y)
