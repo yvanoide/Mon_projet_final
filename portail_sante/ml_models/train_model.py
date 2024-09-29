@@ -62,8 +62,8 @@ def main():
     # Démarrer un nouveau run dans MLflow
     with mlflow.start_run():
         try:
-            # Chemin du fichier de données
-            filepath = os.getenv('DATA_FILE_PATH')
+            # Chemin du fichier de données (URL brute GitHub)
+            filepath = "https://raw.githubusercontent.com/yvanoide/Mon_projet_final/e1/Combine_Dataset_avec_score.csv"
             data = load_data(filepath)
 
             # Séparation des features (X) et de la cible (y)
