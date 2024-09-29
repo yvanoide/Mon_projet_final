@@ -5,19 +5,27 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import joblib
 import tensorflow as tf
 
-# 1. Définir l'URI de tracking pour MLflow
+# Définir l'URI de tracking pour MLflow
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
-# 2. Vérifier la connexion à MLflow
+# Vérifier la connexion à MLflow
 try:
     mlflow.get_tracking_uri()  # Vérifier si l'URI est correcte
     print("Connexion à MLflow réussie.")
 except Exception as e:
     print(f"Erreur de connexion à MLflow: {e}")
 
-# 3. Charger les données depuis le fichier CSV
-file_path = '/home/yves/iadev-python/c13/Combine_Dataset_avec_score.csv'
-data = pd.read_csv(file_path)
+# Chemin vers le fichier CSV (ajuste le chemin ici)
+file_path = '/home/yves/iadev-python/c13/Combine_Dataset_avec_score.csv'  # Assure-toi que ce chemin est correct
+
+# Charger les données depuis le fichier CSV
+try:
+    data = pd.read_csv(file_path)
+except FileNotFoundError as e:
+    print(f"Erreur lors du chargement du fichier CSV : {e}")
+    exit(1)
+
+# Continue avec le reste de ton code...
 
 # 4. Convertir les pourcentages en décimaux
 def convertir_pourcentage_en_decimal(pourcentage):
