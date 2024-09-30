@@ -5,25 +5,28 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-import numpy as np
+import time  # <-- Ajout pour l'attente
+import os
 
 # Configuration des logs
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def generate_data(num_samples=1000, num_features=10):
-    logger.info(f"Génération de {num_samples} échantillons de données...")
-    # Génération de données aléatoires
-    X = np.random.rand(num_samples, num_features)  # Caractéristiques aléatoires
-    y = np.random.randint(0, 2, num_samples)  # Cible binaire aléatoire (0 ou 1)
-    logger.info("Données générées avec succès.")
-    return pd.DataFrame(X), pd.Series(y)
+def load_data(filepath):
+    logger.info(f"Chargement des données depuis {filepath}...")
+    try:
+        data = pd.read_csv(filepath)
+        logger.info("Données chargées avec succès.")
+        return data
+    except Exception as e:
+        logger.error(f"Erreur lors du chargement des données : {e}")
+        raise
 
 def preprocess_data(data):
     logger.info("Prétraitement des données...")
     # Exemple de traitement simple, à adapter selon ton cas
     try:
-        # Remplacer les valeurs manquantes par la médiane (aucune valeur manquante dans ce cas, mais pour le cas général)
+        # Remplacer les valeurs manquantes par la médiane
         data.fillna(data.median(), inplace=True)
         logger.info("Prétraitement terminé avec succès.")
         return data
@@ -60,8 +63,13 @@ def main():
     # Démarrer un nouveau run dans MLflow
     with mlflow.start_run():
         try:
-            # Générer des données aléatoires
-            X, y = generate_data(num_samples=1000, num_features=10)
+            # Chemin du fichier de données (URL brute GitHub)
+            filepath = "https://raw.githubusercontent.com/yvanoide/Mon_projet_final/e1/Combine_Dataset_avec_score.csv"
+            data = load_data(filepath)
+
+            # Séparation des features (X) et de la cible (y)
+            X = data.drop("target", axis=1)  # Remplace 'target' par le nom de ta colonne cible
+            y = data["target"]
 
             # Division des données en train/test
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -81,11 +89,16 @@ def main():
             mlflow.log_metric("accuracy", accuracy)
             mlflow.sklearn.log_model(model, "model")
 
+            # Pause de 5 minutes avant de terminer pour GitHub Actions
+            logger.info("Attente de 5 minutes avant de terminer...")
+            time.sleep(300)  # Pause de 5 minutes (300 secondes)
+
+            logger.info("Fin du script après l'attente de 5 minutes.")
+
         except Exception as e:
             logger.error(f"Erreur dans le processus principal : {e}")
             raise
 
 if __name__ == "__main__":
     logger.info("Démarrage du script d'entraînement...")
-    main()
-    logger.info("Script terminé avec succès.")
+    main
