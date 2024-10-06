@@ -8,7 +8,7 @@ import os
 import numpy as np
 from datetime import datetime, timedelta
 import jwt
-
+from cachetools import cached, TTLCache
 app = FastAPI()
 
 # Configuration des clés secrètes et des paramètres d'authentification
@@ -80,7 +80,9 @@ def verify_token(token: str):
         return payload
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Token invalide")
+cache = TTLCache(maxsize=100, ttl=300)  # Cache de 100 éléments avec une expiration de 5 minutes
 
+#@cached(cache)
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     # Ici, vous devriez vérifier les informations d'identification de l'utilisateur

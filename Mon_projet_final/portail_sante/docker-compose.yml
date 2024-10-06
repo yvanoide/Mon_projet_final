@@ -2,8 +2,8 @@ version: '3'
 services:
   django_app:
     build:
-      context: ./auth_app  # Chemin vers le répertoire contenant le Dockerfile
-      dockerfile: Dockerfile  # Nom du fichier Dockerfile
+      context: ./auth_app
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
@@ -20,6 +20,15 @@ services:
       - "27018:27017"
     volumes:
       - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    ports:
+      - "8083:8081"  # Port de Mongo Express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo_db  # Nom du service MongoDB
+    depends_on:
+      - mongo_db
 
 volumes:
   mongo_data:

@@ -101,8 +101,41 @@ def service_monitoring(request):
 def equipe_view(request):
     return render(request, 'equipe.html')
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from pymongo import MongoClient
+
+# Assurez-vous que vous avez installé pymongo : pip install pymongo
+
+from django.shortcuts import render, redirect
+from pymongo import MongoClient
+
+
 def directeur(request):
+    if request.method == 'POST':
+        # Ici, vous devriez récupérer les données du formulaire
+        utilisateur = request.POST.get('utilisateur')
+        mot_de_passe = request.POST.get('mot_de_passe')
+
+        # Connexion à la base de données MongoDB
+        MONGO_URI = "mongodb://root:pass12345@localhost:27017/"
+        client = MongoClient(MONGO_URI)
+        db = client.connexion
+        collection = db.super_admin
+
+        # Vérifiez si les informations d'identification sont correctes
+        admin = collection.find_one({"utilisateur": utilisateur, "mot_de_passe": mot_de_passe})
+
+        if admin:
+            # Redirige vers la page de succès
+            return redirect('directeur_reussi')
+        else:
+            # Gérer l'erreur (redirection ou message d'erreur)
+            return render(request, 'directeur.html', {'error': 'Identifiants invalides'})
+
     return render(request, 'directeur.html')
+
+
 
 # Votre URL d'API FastAPI
 FASTAPI_URL = 'http://localhost:8002'
@@ -141,14 +174,34 @@ def get_prediction_from_api(data):
 
 def test(request):
     result = None
+    user_prenom = None
+
+    # Configuration de MongoDB
+    MONGO_URI = 'mongodb://root:pass12345@localhost:27017/'
+    DATABASE_NAME = 'connexion'
+    COLLECTION_RESULTAT = 'resultat_test'
+
+    # Vérifier si l'utilisateur est connecté
+    if 'prenom' in request.session:
+        user_prenom = request.session['prenom']
+
     if request.method == 'POST':
-        # Extraction des données du formulaire
+        # Extraire les données du formulaire
         genre = request.POST.get('genre')
         age = request.POST.get('age')
-        sleep_quality = float(request.POST.get('sleep_quality')) / 100.0  # Convertir en décimal
+        sleep_quality = float(request.POST.get('sleep_quality')) / 100.0  # Conversion en décimal
         heart_rate = request.POST.get('heart_rate')
         steps = request.POST.get('steps')
         sleep_duration = request.POST.get('sleep_duration')
+
+        # Vérification des données
+        print("Données reçues :")
+        print("Genre:", genre)
+        print("Âge:", age)
+        print("Qualité du sommeil:", sleep_quality)
+        print("Rythme cardiaque:", heart_rate)
+        print("Étapes quotidiennes:", steps)
+        print("Durée de sommeil:", sleep_duration)
 
         # Préparer les données à envoyer à l'API FastAPI
         data = {
@@ -163,14 +216,42 @@ def test(request):
         # Obtenir la prédiction depuis l'API FastAPI
         result = get_prediction_from_api(data)
 
+        if result and user_prenom:
+            # Connexion à MongoDB
+            try:
+                client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+                db = client[DATABASE_NAME]
+                collection = db[COLLECTION_RESULTAT]
+
+                # Insérer le résultat du test dans la collection MongoDB "resultat_test"
+                result_data = {
+                    'prenom': user_prenom,
+                    'genre': genre,
+                    'age': int(age),  # Assurez-vous que l'âge est un entier
+                    'qualite_sommeil': sleep_quality * 100,  # Enregistrer en pourcentage
+                    'rythme_cardiaque': float(heart_rate),  # Assurez-vous que c'est un float
+                    'etapes_quotidiennes': int(steps),  # Assurez-vous que c'est un entier
+                    'duree_sommeil': float(sleep_duration),  # Assurez-vous que c'est un float
+                    'score': result.get('score', None),  # Enregistrer 'score' s'il est disponible
+                    'prediction': result.get('response', None)  # Enregistrer 'response' s'il est disponible
+                }
+                # Vérifier les données avant l'insertion
+                print("Données à insérer dans MongoDB:", result_data)
+                
+                collection.insert_one(result_data)
+                print("Résultat enregistré avec succès dans MongoDB.")
+            except Exception as e:
+                print(f"Erreur lors de la connexion à MongoDB : {e}")
+
     return render(request, 'test.html', {
         'result': result, 
         'score': result['score'] if result else None, 
         'response': result['response'] if result else None
     })
 
-import mlflow
-import mlflow.keras
+
+
+
 
 # Fonction d'entraînement avec MLflow
 def train_model_with_mlflow(data, labels):
@@ -191,3 +272,49 @@ def train_model_with_mlflow(data, labels):
         mlflow.keras.log_model(model, 'model')
 
         return model
+
+
+from django.shortcuts import render, redirect
+from pymongo import MongoClient
+from pymongo.errors import PyMongoError
+
+# Connexion à MongoDB
+client = MongoClient('mongodb://root:pass12345@localhost:27017/')
+db = client['connexion']
+collection = db['patient']
+
+def inscription(request):
+    if request.method == 'POST':
+        # Récupérer les données du formulaire
+        prenom = request.POST.get('prenom')
+        mot_de_passe = request.POST.get('mot_de_passe')
+        email = request.POST.get('email')
+        
+        # Créer le document patient à insérer dans MongoDB
+        patient_data = {
+            "prenom": prenom,
+            "mot_de_passe": mot_de_passe,
+            "email": email
+        }
+        
+        # Insertion du document dans la collection 'patient'
+        result = collection.insert_one(patient_data)
+        
+        # Vérification de l'insertion
+        print(f"Document inséré avec l'ID: {result.inserted_id}")
+        
+        # Redirection après l'inscription réussie
+        return redirect('inscription_reussie')
+    
+    # Afficher le formulaire si la requête n'est pas en POST
+    return render(request, 'inscription.html')
+
+def inscription_reussie(request):
+    return render(request, 'inscription_reussie.html')
+
+def directeur_reussi(request):
+    # Vous pouvez passer des informations au template si nécessaire
+    context = {
+        'message': 'Connexion réussie en tant que directeur !'
+    }
+    return render(request, 'directeur_reussi.html', context)

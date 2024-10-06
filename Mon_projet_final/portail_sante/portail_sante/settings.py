@@ -26,6 +26,11 @@ SECRET_KEY = 'django-insecure-56#q(kt7w(^cwo&ji0-11)iaap4don&%-v=w8w8nvmf%%p+kp3
 DEBUG = True
 
 ALLOWED_HOSTS = []
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'auth_app/static',  # Chemin vers ton dossier static
+]
 
 
 # Application definition
@@ -139,3 +144,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# settings.py
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'

@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'santebd_home_frise4.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-top: 20%;
+            text-shadow: 2px 2px 4px black;
+        }
+        
+        .btn-connexion {
+            display: block;
+            margin: 20px auto;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .btn-connexion:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+            color: white;
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 540px;
+            padding: 20px;
+        }
+        .content img {
+            max-width: 45%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .text-container {
+            max-width: 45%;
+            padding-left: 20px;
+        }
+        .text-container h2 {
+            font-size: 1.8rem;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+        .text-container p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .rendez-vous {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .rendez-vous img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .test-sante {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            padding: 20px;
+            margin-bottom: 100px;
+        }
+        .test-sante img {
+            max-width: 45%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .test-sante .text-container {
+            max-width: 45%;
+            padding-left: 20px;
+            margin-bottom: 100px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Portail Santé</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Inscription</a> <!-- Bouton d'inscription ajouté ici -->
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'equipe' %}">Portail Équipe</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h1>Bienvenue sur le Portail Santé</h1>
+        <a href="http://127.0.0.1:8000/login/" class="btn-connexion">Connexion</a>
+    </div>
+    
+    <div class="container content">
+        <img src="{% static 'Patrick-Dempsey-quel-avenir-pour-le-Docteur-Mamour.jpg' %}" alt="Docteur">
+        <div class="text-container">
+            <h2>Les Docteurs : Un Soutien Inestimable</h2>
+            <p>
+                Nos médecins sont là pour vous accompagner à chaque étape de votre santé. Ils sont formés pour diagnostiquer, traiter et prévenir les maladies, tout en vous fournissant des conseils sur le bien-être général. Avec leur expertise, vous pouvez être assuré d'une prise en charge de qualité.
+            </p>
+        </div>
+    </div>
+
+    <div class="rendez-vous">
+        <h2>Gérer vos rendez-vous santé</h2>
+        <a href="http://127.0.0.1:8000/login/" class="btn-connexion">Gérer mes rendez-vous</a>
+        <img src="{% static 'medecin-urgence.jpg' %}" alt="Médecin d'urgence">
+    </div>
+
+    <div class="container test-sante">
+        <img src="{% static 'blog-logo-design-questionnaire-1200x557.jpg' %}" alt="Test de santé">
+        <div class="text-container">
+            <h2>Faites votre test de santé</h2>
+            <p>
+                Évaluez votre état de santé avec notre test rapide et fiable. Répondez à quelques questions pour obtenir des conseils personnalisés adaptés à vos besoins.
+            </p>
+            <a href="http://127.0.0.1:8000/login/" class="btn-connexion">Faire le test</a>
+        </div>
+    </div>
+    
+</body>
+</html>
