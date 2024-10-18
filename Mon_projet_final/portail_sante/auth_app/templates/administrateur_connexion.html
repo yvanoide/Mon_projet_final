@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Administrateur</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Connexion Administrateur</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="prenom">Prénom</label> <!-- Remplacé par "Prénom" -->
+                <input type="text" class="form-control" id="prenom" name="prenom" required> <!-- Changé le nom à "prenom" -->
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" class="form-control" id="password" name="mot_de_passe" required> <!-- Changé le nom à "mot_de_passe" -->
+            </div>
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Réussie</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function togglePatientData() {
+            var dataDiv = document.getElementById('patientData');
+            var toggleButton = document.getElementById('toggleButton');
+            if (dataDiv.style.display === 'none') {
+                dataDiv.style.display = 'block';
+                toggleButton.textContent = 'Masquer les données';
+            } else {
+                dataDiv.style.display = 'none';
+                toggleButton.textContent = 'Afficher les données';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Connexion Réussie !</h1>
+        <p>Bienvenue, vous êtes maintenant connecté en tant qu'administrateur.</p>
+
+        <!-- Agendas affichés -->
+        <h2 class="mt-5">Agendas</h2>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Description</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agenda in agendas %}
+                <tr>
+                    <td>{{ agenda.prenom }}</td>
+                    <td>{{ agenda.description }}</td>
+                    <td>{{ agenda.debut }}</td>
+                    <td>{{ agenda.fin }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Aucun agenda trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Informations sur les scores des patients -->
+        <h2 class="mt-5">Comprendre les scores des patients</h2>
+        <p>
+            <strong>Score 0 :</strong> Indique un état critique du patient nécessitant une intervention immédiate.<br>
+            <strong>Score 0.25 :</strong> Le résultat est préoccupant ; il serait avisé de surveiller l'évolution du patient.<br>
+            <strong>Score 0.5 :</strong> Montre une amélioration de l'état de santé du patient ; continuer l'observation.<br>
+            <strong>Score 0.75 :</strong> Indique un excellent état de santé ; aucune intervention immédiate requise.
+        </p>
+
+        <!-- Bouton pour afficher ou masquer les données des patients -->
+        <button id="toggleButton" class="btn btn-primary mt-3" onclick="togglePatientData()">Afficher les données</button>
+
+        <!-- Données des patients (affichées ou masquées) -->
+        <div id="patientData" style="display: none;" class="mt-4">
+            <h2>Données des Patients</h2>
+            <table class="table table-bordered">
+                 <!-- Tableau des données des patients -->
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Qualité du sommeil</th>
+                    <th>Rythme cardiaque</th>
+                    <th>Étapes quotidiennes</th>
+                    <th>Durée du sommeil</th>
+                    <th>Score de santé</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patient_data %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.Qualite_du_sommeil }}</td>
+                    <td>{{ patient.Rythme_cardiaque }}</td>
+                    <td>{{ patient.Etapes_quotidiennes }}</td>
+                    <td>{{ patient.Duree_du_sommeil }}</td>
+                    <td>{{ patient.Score_de_sante }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">Aucune donnée trouvée.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <!-- Bouton retour à l'accueil -->
+        <a href="{% url 'home' %}" class="btn btn-primary mt-3">Retour à l'accueil</a>
+    </div>
+</body>
+</html>
