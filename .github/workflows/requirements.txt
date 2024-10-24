@@ -1,0 +1,6 @@
+tensorflow==2.5.0
+Django==3.2
+joblib==1.0.1
+pymongo==3.11.4
+scikit-learn==0.24.2
+requests==2.25.1
