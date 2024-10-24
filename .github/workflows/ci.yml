@@ -1,28 +1,46 @@
-name: CI Pipeline
+name: CI
 
 on:
   push:
     branches:
-      - main
-      - develop
+      - front  # Modifiez cela selon votre branche
+  pull_request:
+    branches:
+      - front  # Modifiez cela selon votre branche
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mydatabase
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'  # Choisissez la version de Python que vous utilisez
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Assurez-vous d'avoir un fichier requirements.txt
 
-      - name: Run tests
-        run: |
-          pytest
+    - name: Run tests
+      run: |
+        python manage.py test  # Commande pour exécuter vos tests
