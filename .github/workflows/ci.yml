@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - front  # Modifiez cela selon votre branche
+      - front
   pull_request:
     branches:
-      - front  # Modifiez cela selon votre branche
+      - front
 
 jobs:
   build:
@@ -29,18 +29,18 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Mise à jour vers v3
+      uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v4  # Mise à jour vers v4
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.10'  # Choisissez la version de Python que vous utilisez
+        python-version: '3.10'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r .github/workflows/requirements.txt  # Assurez-vous que le chemin vers requirements.txt est correct
+        pip install -r .github/workflows/requirements.txt  # Utiliser TensorFlow 2.18.0 dans requirements.txt
 
     - name: Run tests
       run: |
-        python manage.py test  # Commande pour exécuter vos tests
+        python manage.py test
