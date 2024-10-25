@@ -24,12 +24,13 @@ urlpatterns = [
     path('monitoring/', views.service_monitoring, name='service_monitoring'),
     path('equipe/', views.equipe_view, name='equipe'),
     path('directeur/', views.directeur, name='directeur'),
-    path('directeur_reussi/', views.directeur_reussi, name='directeur_reussi'),  # Pas de paramètre ici
-    path('inscription/', views.inscription, name='register'),
-    path('inscription-reussie/', views.inscription_reussie, name='inscription_reussie'),
-    path('directeur_reussi/', views.directeur_reussi, name='directeur_reussi'),  # Assurez-vous que cette ligne est ici
-    path('', views.home, name='home'),
-    path('login/', views.login_view, name='login'),
-    path('directeur/', views.directeur, name='directeur'),  # Assurez-vous que cette route existe
     path('directeur_reussi/', views.directeur_reussi, name='directeur_reussi'),
+    path('inscription/', views.inscription, name='inscription'),
+    path('inscription-reussie/', views.inscription_reussie, name='inscription_reussie'),
+    path('administrateur_connexion/', views.administrateur_connexion, name='administrateur_connexion'),
+    path('administrateur_reussi/', views.administrateur_reussi, name='administrateur_reussi'),  # Assurez-vous que ce chemin est correct
+    path('register/', views.register, name='register'),
+    path('agenda/', views.agenda, name='agenda'),
+
 ]
+

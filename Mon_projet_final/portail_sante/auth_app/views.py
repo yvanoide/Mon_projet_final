@@ -116,6 +116,8 @@ def directeur(request):
         # Ici, vous devriez récupérer les données du formulaire
         utilisateur = request.POST.get('utilisateur')
         mot_de_passe = request.POST.get('mot_de_passe')
+        
+        print(f"Utilisateur: {utilisateur}, Mot de passe: {mot_de_passe}")  # Debug print
 
         # Connexion à la base de données MongoDB
         MONGO_URI = "mongodb://root:pass12345@localhost:27017/"
@@ -127,9 +129,11 @@ def directeur(request):
         admin = collection.find_one({"utilisateur": utilisateur, "mot_de_passe": mot_de_passe})
 
         if admin:
+            print("Connexion réussie")  # Debug print
             # Redirige vers la page de succès
             return redirect('directeur_reussi')
         else:
+            print("Identifiants invalides")  # Debug print
             # Gérer l'erreur (redirection ou message d'erreur)
             return render(request, 'directeur.html', {'error': 'Identifiants invalides'})
 
@@ -318,3 +322,85 @@ def directeur_reussi(request):
         'message': 'Connexion réussie en tant que directeur !'
     }
     return render(request, 'directeur_reussi.html', context)
+
+from django.shortcuts import render
+
+def administrateur_connexion(request):
+    # Connexion à MongoDB - configuration directement dans la fonction
+    MONGODB_URI = 'mongodb://root:pass12345@localhost:27017/'  # Exemple : adresse de votre MongoDB
+    DATABASE_NAME = 'connexion'
+    COLLECTION_NAME = 'administrateur'
+
+    if request.method == 'POST':
+        # Récupérer les données envoyées (prénom et mot de passe)
+        prenom = request.POST.get('prenom')
+        mot_de_passe = request.POST.get('mot_de_passe')
+
+        # Connexion à MongoDB
+        client = MongoClient(MONGODB_URI)
+        db = client[DATABASE_NAME]
+        collection = db[COLLECTION_NAME]
+
+        # Rechercher l'administrateur dans la collection
+        administrateur = collection.find_one({'prenom': prenom, 'mot_de_passe': mot_de_passe})
+
+        if administrateur:
+            # Si l'administrateur est trouvé, rediriger vers une page de succès ou d'accueil
+            return redirect('administrateur_reussi')  # Remplacez par le nom d'URL approprié
+        else:
+            # Si les identifiants ne correspondent pas, retournez un message d'erreur
+            return JsonResponse({'message': 'Identifiants incorrects !'}, status=401)
+
+    # Si la méthode n'est pas POST, affichez le formulaire de connexion
+    return render(request, 'administrateur_connexion.html')
+
+def administrateur_reussi(request):
+    # Connexion à MongoDB
+    client = MongoClient('mongodb://root:pass12345@localhost:27017/')
+    db = client['data']
+    collection = db['enorme_anonyme']
+    
+    # Récupérer les données depuis MongoDB
+    patient_data = list(collection.find())  # Utilisation de find() pour récupérer toutes les données
+    
+    # Renommer _id en id pour chaque patient
+    for patient in patient_data:
+        patient['id'] = str(patient.pop('_id'))  # Convertir l'ObjectId en chaîne pour l'afficher dans le template
+
+    # Envoyer les données au template
+    return render(request, 'administrateur_reussi.html', {
+        'patient_data': patient_data
+    })
+    
+    
+def agenda(request):
+    client = MongoClient(MONGO_URI)
+    db = client.connexion
+    agenda_collection = db.agenda
+
+    if request.method == 'POST':
+        # Récupérer les données du formulaire
+        nom = request.POST.get('nom')
+        prenom = request.POST.get('prenom')
+        numero_telephone = request.POST.get('numero_telephone')
+        date_rendez_vous = request.POST.get('date_rendez_vous')
+
+        # Insérer les données dans la collection 'agenda'
+        agenda_collection.insert_one({
+            'nom': nom,
+            'prenom': prenom,
+            'numero_telephone': numero_telephone,
+            'date_rendez_vous': date_rendez_vous
+        })
+
+        # Rediriger vers la même page ou vers une autre page après l'enregistrement
+        return redirect('agenda')
+
+    # Récupérer tous les rendez-vous de la collection
+    rendez_vous = agenda_collection.find()
+    
+    return render(request, 'agenda.html', {'rendez_vous': rendez_vous})
+
+def register(request):
+    # Logique de la fonction pour gérer l'inscription
+    return render(request, 'register.html')

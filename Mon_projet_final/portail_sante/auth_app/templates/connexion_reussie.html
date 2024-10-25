@@ -80,14 +80,15 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                    <a class="nav-link" href="{% url 'home' %}">Déconnexion</a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <button class="btn btn-secondary" disabled>Votre Test Santé</button>
+                    <a class="nav-link" href="{% url 'test' %}">Votre Test Santé</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'agenda' %}">Agenda</a> <!-- Nouveau lien pour l'agenda -->
+                </li>
+                
             </ul>
         </div>
     </nav>

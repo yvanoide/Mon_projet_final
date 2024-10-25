@@ -2,11 +2,47 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Directeur Réussi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Réussie</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+            text-align: center;
+        }
+        .links {
+            margin-top: 20px;
+        }
+        .btn-group {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Connexion Réussie</h1>
-    <p>Bienvenue, directeur ! Vous êtes maintenant connecté.</p>
-    <a href="{% url 'home' %}">Retour à la page d'accueil</a>
+    <div class="container">
+        <h2>Bienvenue, Directeur !</h2>
+        <p>Vous êtes connecté avec succès à votre compte.</p>
+        
+        <div class="links">
+            <h5>Liens utiles :</h5>
+        </div>
+
+        <div class="btn-group">
+            <a href="https://colab.research.google.com/drive/1V_vGIRU8a4t6jXlvwardp1D0VKKwUYRj?authuser=0#scrollTo=sClbTMDLcjVA" class="btn btn-primary">Accéder à l'IA</a>
+            <a href="https://colab.research.google.com/drive/1naDCCgm1GWZmMMuFe0Y72frFDMx9MKMx?authuser=0#scrollTo=bt0rWNe1BOfV" class="btn btn-primary">Tableau de bord</a>
+            <a href="http://127.0.0.1:5000/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&datasetsFilter=W10%3D&modelVersionFilter=All%20Runs&selectedColumns=attributes.%60Source%60,attributes.%60Models%60,attributes.%60Dataset%60,metrics.%60accuracy%60,metrics.%60mae%60,metrics.%60mse%60,metrics.%60r2%60,metrics.%60r2_score%60,metrics.%60rmse%60&runsHidden[]=5d23eea9d7f74802b74443c35a285f21&compareRunsMode=CHART&compareRunCharts=W3sidXVpZCI6IjE3Mjg4NDYyMjM0NzY2OWxnYWR1eiIsInR5cGUiOiJCQVIiLCJydW5zQ291bnRUb0NvbXBhcmUiOjEwLCJtZXRyaWNLZXkiOiJhY2N1cmFjeSJ9LHsidXVpZCI6IjE3Mjg4NDYyMjM0NzYxenhkcnJsYiIsInR5cGUiOiJCQVIiLCJydW5zQ291bnRUb0NvbXBhcmUiOjEwLCJtZXRyaWNLZXkiOiJtYWUifSx7InV1aWQiOiIxNzI4ODQ2MjIzNDc2aW5tbm8zbWoiLCJ0eXBlIjoiQkFSIiwicnVuc0NvdW50VG9Db21wYXJlIjoxMCwibWV0cmljS2V5IjoicjJfc2NvcmUifSx7InV1aWQiOiIxNzI4ODQ2MjIzNDc2eHV1ang2MnUiLCJ0eXBlIjoiQkFSIiwicnVuc0NvdW50VG9Db21wYXJlIjoxMCwibWV0cmljS2V5IjoibXNlIn0seyJ1dWlkIjoiMTcyODg0NjIyMzQ3Nmt3ZGs1OWI3IiwidHlwZSI6IkJBUiIsInJ1bnNDb3VudFRvQ29tcGFyZSI6MTAsIm1ldHJpY0tleSI6InJtc2UifSx7InV1aWQiOiIxNzI4ODQ2MzI3ODIxOWNpMmVqaXUiLCJ0eXBlIjoiUEFSQUxMRUwiLCJydW5zQ291bnRUb0NvbXBhcmUiOjEwLCJzZWxlY3RlZFBhcmFtcyI6WyJuX2VzdGltYXRvcnMiXSwic2VsZWN0ZWRNZXRyaWNzIjpbInIyX3Njb3JlIl19XQ%3D%3D" class="btn btn-primary">MLflow</a>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Retour à l'accueil</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

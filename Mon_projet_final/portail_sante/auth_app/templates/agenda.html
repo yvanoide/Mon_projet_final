@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,62 +6,70 @@
     <title>Agenda</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-image: url("{% static 'santebd_home_frise4.png' %}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
-        }
-        h1 {
-            color: white;
-            text-align: center;
-            margin-top: 20%; 
-        }
-        .btn-rendez-vous {
-            display: block;
-            margin: 20px auto; 
-            background-color: #28a745; 
-            color: white;
-            font-size: 1.5rem;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            text-align: center;
-            transition: background-color 0.3s ease;
-        }
-        .btn-rendez-vous:hover {
-            background-color: #218838; 
-            text-decoration: none;
-            color: white;
+        .form-container {
+            border: 1px solid #ccc; /* Bordure */
+            border-radius: 8px; /* Coins arrondis */
+            padding: 20px; /* Espacement interne */
+            margin-bottom: 20px; /* Marge en bas */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Portail Santé</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'equipe' %}">Portail Équipe</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
     <div class="container mt-4">
-        <h1>Agenda de Rendez-vous</h1>
-        <p>Gérez vos rendez-vous en toute simplicité.</p>
-        <a href="{% url 'login' %}" class="btn-rendez-vous">Gérer mes rendez-vous</a>
+        <h1>Agenda</h1>
+
+        <!-- Formulaire pour prendre un rendez-vous -->
+        <div class="form-container">
+            <h2>Prendre un Rendez-vous</h2>
+            <form method="POST" action="{% url 'agenda' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="numero_telephone">Numéro de Téléphone</label>
+                    <input type="tel" class="form-control" id="numero_telephone" name="numero_telephone" required>
+                </div>
+                <div class="form-group">
+                    <label for="date_rendez_vous">Date de Rendez-vous</label>
+                    <input type="date" class="form-control" id="date_rendez_vous" name="date_rendez_vous" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Prendre Rendez-vous</button>
+            </form>
+        </div>
+
+        <!-- Tableau des rendez-vous -->
+        <h2>Liste des Rendez-vous</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Numéro de Téléphone</th>
+                    <th>Date de Rendez-vous</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rdv in rendez_vous %}
+                <tr>
+                    <td>{{ rdv.nom }}</td>
+                    <td>{{ rdv.prenom }}</td>
+                    <td>{{ rdv.numero_telephone }}</td>
+                    <td>{{ rdv.date_rendez_vous }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Aucun rendez-vous trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
