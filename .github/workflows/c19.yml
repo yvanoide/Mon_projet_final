@@ -34,10 +34,11 @@ jobs:
           python -m unittest discover -s tests  # Remplacer "tests" par le répertoire contenant vos tests
 
       - name: Run Django tests
-        working-directory: ./Mon_projet_final/portail_sante/  # Changer le répertoire de travail
         run: |
-          python manage.py test  # Exécuter les tests Django
-          
+          cd Mon_projet_fina/Mon_projet_final/portail_sante
+          python manage.py test  # Exécuter les tests Django dans le bon répertoire
+
       - name: Build and deploy
         run: |
-          echo "Déploiement de l'application"  # Placeholder pour les commandes de déploiement
+          # Ajouter les commandes de build et déploiement ici, par exemple :
+          echo "Déploiement de l'application"  # Placehoder pour les commandes de déploiement
