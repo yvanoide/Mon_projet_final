@@ -3,6 +3,6 @@ Django==3.2
 joblib==1.0.1
 pymongo==3.11.4
 requests==2.25.1
-
+numpy
 pandas
 scikit-learn==1.0.2
