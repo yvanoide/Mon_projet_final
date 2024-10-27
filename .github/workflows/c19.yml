@@ -34,7 +34,7 @@ jobs:
           python -m unittest discover -s tests  # Remplacer "tests" par le répertoire contenant vos tests
 
       - name: Run Django tests
-        working-directory: ./home/yves/iadev-python/c13/Mon_projet_fina/Mon_projet_final/portail_sante/manage.py  # Changer le répertoire de travail
+        working-directory: ./Mon_projet_final/portail_sante/  # Changer le répertoire de travail
         run: |
           python manage.py test  # Exécuter les tests Django
           
