@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - front  # ou toute autre branche que tu veux surveiller
+      - front
   pull_request:
     branches:
       - front
@@ -18,17 +18,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'  # Spécifie la version de Python
+          python-version: '3.8'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt  # Assure-toi que ce chemin est correct
 
       - name: Run tests
         run: |
-          python -m unittest discover  # Exécute les tests
-      
-      - name: Deploy
-        run: |
-          echo "Déploiement de l'application"  # Ajoute ici les commandes de déploiement
+          python -m unittest discover
