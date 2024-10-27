@@ -38,3 +38,9 @@ jobs:
           # Add your build and deployment commands here, for example:
           # python -m your_application_module
           echo "Déploiement de l'application"  # Placeholder for deployment commands
+
+      - name: Run Django tests
+        run: |
+          cd Mon_projet_final/portail_sante
+          python manage.py test
+
