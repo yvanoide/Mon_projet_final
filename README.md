@@ -1,4 +1,5 @@
-Projet Chef d'Œuvre : Portail de Santé pour la Détection des Troubles du Sommeil
+Portail de Santé pour la Détection des Troubles du Sommeil
+
 Description
 Ce projet est un portail de santé conçu pour assister les professionnels de santé dans l’évaluation du niveau de stress et la détection des troubles du sommeil des patients (comme l'insomnie et l'apnée du sommeil). Il combine une application web avec un système d'intelligence artificielle (IA) pour fournir des diagnostics basés sur des données de santé, facilitant la prise de décision pour les médecins et améliorant la gestion des patients.
 
