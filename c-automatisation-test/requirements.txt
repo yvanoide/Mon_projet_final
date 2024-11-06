@@ -4,3 +4,4 @@ pytest
 unittest2
 mysql.connector
 fastapi
+requests
