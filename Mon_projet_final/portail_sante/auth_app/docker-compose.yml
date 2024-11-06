@@ -1,0 +1,25 @@
+version: '3'
+services:
+  django_app:
+    build:
+      context: ./auth_app  # Chemin vers le répertoire contenant le Dockerfile
+      dockerfile: Dockerfile  # Nom du fichier Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./auth_app:/app
+      - /home/yves/iadev-python/c13/best_model.keras:/app/best_model.keras
+    environment:
+      - DJANGO_SETTINGS_MODULE=myproject.settings
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

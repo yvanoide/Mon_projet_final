@@ -1,0 +1,12 @@
+Django>=3.2,<4.0
+djangorestframework
+pymongo
+djongo
+pandas
+tensorflow
+joblib
+scikit-learn
+pytest
+mlflow
+protobuf<3.21.0
+numpy==1.21.0
